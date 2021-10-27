@@ -1,30 +1,30 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+  MemoryRouter as Router, Route, Switch
+} from 'react-router';
 import './app.css';
 import { Tickets } from './components/Tickets';
 import { TicketDetail } from './components/TicketDetail';
+import {ApiService} from "../api";
 
-interface AppProps {
-  apiService: ApiService;
-}
+const apiService = new ApiService();
+export const AppContext = React.createContext({});
 
-const App = ({ apiService }: AppProps) => (
-  <Router>
+const App = () => (
+   <AppContext.Provider value={{ apiService }}>
     <div className="app">
-      <Switch>
-        <Route path="/">
-          <Tickets apiService={apiService} />
-        </Route>
-        <Route path="/ticket:ticketId">
-          <TicketDetail />
-        </Route>
-      <Switch>
+      <Router>
+        <Switch>
+          <Route path="/">
+            <Tickets />
+          </Route>
+          <Route path="/ticket:ticketId">
+            <TicketDetail />
+          </Route>
+        </Switch>
+      </Router>
     </div>
-  </Router>
+   </AppContext.Provider>
 );
 
 export default App;

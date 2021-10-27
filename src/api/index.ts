@@ -99,6 +99,27 @@ export class ApiService {
     );
   }
 
+  private oldStoredTickets: Ticket[] = []
+
+  filterTicket(completed: boolean, reset?: boolean) {
+    return new Promise((res) => {
+      setTimeout(() => { res('end') }, randomDelay());
+    }).then(res => {
+      if (reset) {
+        this.storedTickets = this.oldStoredTickets;
+        return null;
+      }
+
+      if (!this.oldStoredTickets.length) {
+        this.oldStoredTickets = [...this.storedTickets];
+      } else {
+        this.storedTickets = this.oldStoredTickets;
+      }
+
+      this.storedTickets = this.storedTickets.filter(ticket => ticket.completed === completed);
+    });
+  }
+
   assign(ticketId: number, userId: number) {
     const foundTicket = this.findTicketById(ticketId);
     const user = this.findUserById(userId);
