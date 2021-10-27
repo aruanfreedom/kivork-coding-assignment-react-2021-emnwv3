@@ -5,7 +5,7 @@ import {
 import './app.css';
 import { Tickets } from './components/Tickets';
 import { TicketDetail } from './components/TicketDetail';
-import {ApiService} from "../api";
+import { ApiService } from "../api";
 
 const apiService = new ApiService();
 export const AppContext = React.createContext({});
@@ -15,7 +15,7 @@ const App = () => (
     <div className="app">
       <Router>
         <Switch>
-          <Route path="/">
+          <Route exact path="/">
             <Tickets />
           </Route>
           <Route path="/ticket:ticketId">
